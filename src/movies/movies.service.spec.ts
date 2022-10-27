@@ -50,4 +50,41 @@ describe('MoviesService', () => {
     })
   })
 
+  describe("createOne", () => {
+    it("should create a movie", () => {
+      const beforeCreate = service.getAll().length;
+      service.create({
+        title: "Test Movie",
+        genres: ['test'],
+        year: 2000,
+      })
+      const afterCreate = service.getAll().length;
+
+      expect(afterCreate).toBeGreaterThan(beforeCreate);
+    })
+  })
+
+  describe("deleteOne", () => {
+    it("delete a movie", () => {
+      service.create({
+        title: "Test Movie",
+        genres: ['test'],
+        year: 2000,
+      })
+      const beforeDelete = service.getAll();
+      service.deleteOne(1)
+      const afterDelete = service.getAll();
+
+      expect(afterDelete.length).toBeLessThan(beforeDelete.length);
+    })
+    it("should return a 404", () => {
+      try {
+        service.deleteOne(999);
+      } catch (err) {
+        expect(err).toBeInstanceOf(NotFoundException);
+        expect(err.message).toEqual("Movie with ID 999 not found.")
+      }
+    })
+  })
+
 });
