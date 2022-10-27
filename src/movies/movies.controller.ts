@@ -6,9 +6,7 @@ import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
-  constructor(private readonly moviesService: MoviesService) {
-
-  }
+  constructor(private readonly moviesService: MoviesService) {}
 
   @Get()
   getAll(): Movie[] {
@@ -34,5 +32,4 @@ export class MoviesController {
   patch(@Param("id") movieId: number, @Body() updateData: UpdateMovieDTO) {
     return this.moviesService.update(movieId, updateData);
   }
-
 }
